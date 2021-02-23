@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
+ 
+using namespace std;
+#pragma warning(disable:4996)
+ 
+int N = 0;
+long long ans;
+long long dp[61][31][61];
+ 
+long long solution(int day, int one, int half) {
+    long long& ret = dp[day][one][half];
+    if (ret != -1) return ret;
+    ret = 0;
+ 
+    if (day == 2 * N) {
+        return ret = 1;
+    }
+    
+    if (one > 0) ret += solution(day + 1, one - 1, half + 1);    //1개를 뽑아, 반개먹고, 반개넣음
+    if (half > 0) ret += solution(day + 1, one, half - 1);    //반개만 먹는 경우
+    return ret;
+}
+ 
+int main() {
+    do {
+        scanf("%d", &N);
+        for (int i = 0; i <= 2 * N; i++) {
+            for (int j = 0; j <= N; j++) {
+                for (int k = 0; k <= 2 * N; k++) {
+                    dp[i][j][k] = -1;
+                }
+            }
+        }
+ 
+        ans = solution(0, N, 0);
+        if (N != 0) printf("%lld\n", ans);
+    } while (N != 0);
+ 
+    return 0;
+}
+ 
