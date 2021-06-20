@@ -1,36 +1,30 @@
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
 #include <algorithm>
 using namespace std;
-bool compare(string a, string b) {
-    int i = 0;
-    if(a.length() == b.length())
-    {
-        for(int i = 0; i < a.length(); i++)
-        {
-            if(a[i] != b[i])
-                return a[i] < b[i];
-        }
-    }
-    return a.length() < b.length();
+
+bool scompare(string a, string b) {
+	if (a.size() == b.size()) return a < b;
+	return a.size() < b.size();
 }
+
 int main() {
-    int num;
-    string tmp;
-    cin >> num;
-    vector<string> arr;
-    for(int i = 0; i < num; i++)
-    {
-        cin >> tmp;
-        arr.push_back(tmp);
-    }
-    sort(arr.begin(),arr.end(),compare);
-    cout << arr[0] << '\n';
-    for(int i = 1; i < num; i++)
-    {
-        if(arr[i-1] == arr[i])
-            continue;
-        cout << arr[i] << '\n';
-    }
+	int N;
+	cin >> N;
+
+	string *sorted = new string[N + 1];
+	for (int i = 0; i < N; i++) {
+		string word;
+		cin >> word;
+		sorted[i] = word;
+	}
+	sort(sorted, sorted + N, scompare);
+	for (int i = 0; i < N; i++) {
+		if (sorted[i] != sorted[i + 1]) {
+			if (i == N - 1) cout << sorted[i];
+			else cout << sorted[i] << endl;
+		}
+	}
+	return 0;
 }
